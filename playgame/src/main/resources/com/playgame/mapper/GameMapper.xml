@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.playgame.mapper.GameMapper">
+    <select id="findAll" resultType="Games">
+        select * from games
+        <where >
+            <if test="gameName != null and gameName != ''">
+                and gameName=#{gameName}
+            </if>
+            <if test="gameType != null and gameType != ''">
+                and gameType=#{gameType}
+            </if>
+            <if test="gameCompany != null and gameCompany != ''">
+                and gameCompany=#{gameCompany}
+            </if>
+            <if test="gameYear != null and gameYear != 0 and gameYear != ''">
+                and gameYear=#{gameYear}
+            </if>
+        </where>
+    </select>
+
+    <select id="selectByName" resultType="int">
+        select count(0) from games where gameName=#{gameName}
+    </select>
+
+    <insert id="addGame" parameterType="Games">
+        insert into games (gameName,gameType,gameCompany,gameYear) values (#{gameName},#{gameType},#{gameCompany},#{gameYear})
+    </insert>
+</mapper>

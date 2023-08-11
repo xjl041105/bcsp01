@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>游戏主页</title>
+</head>
+<style>
+    .container, table {
+        width: 750px;
+
+    }
+
+    .container {
+        margin: 120px auto;
+    }
+
+    .container, table tr {
+        line-height: 37px;
+    }
+</style>
+<body>
+<div class="container">
+    <span class="error" style="color: red;font-size: 20px;padding-left: 10px"></span>
+    <table border="1">
+        <tr>
+            <th colspan="4"><a href="AddOrQuery.html" style="float: right;margin-right: 13px">返回</a></th>
+        </tr>
+        <tr style="background-color: yellow">
+            <th colspan="4">游戏列表</th>
+        </tr>
+        <tr>
+            <th>游戏名称</th>
+            <th>游戏类别</th>
+            <th>发行公司</th>
+            <th>发行年份</th>
+        </tr>
+
+    </table>
+</div>
+</body>
+<script src="./js/jquery-1.8.3.min.js"></script>
+<script>
+    $(function () {
+        $.getJSON("/games/findAll",
+            function (data) {
+                $(data).each(function (i, e) {
+                    let tr = `
+                               <tr>
+                        <td>` + e.gameName + `</td>
+                        <td>` + e.gameType + `</td>
+                        <td>` + e.gameCompany + `</td>
+                        <td>` + e.gameYear + `</td>
+                    </tr>
+                    `;
+                    $("table").append(tr);
+                });
+            });
+    })
+</script>
+</html>

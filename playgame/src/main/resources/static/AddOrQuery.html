@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>新增游戏信息</title>
+</head>
+<style>
+    .container {
+        margin: 120px auto;
+    }
+
+    .container, table {
+        width: 670px;
+    }
+
+    .container table {
+        margin-left: 90px;
+    }
+
+    .container table tr {
+        line-height: 47px;
+    }
+
+    .container table tr input[type=text] {
+        width: 270px;
+        height: 27px;
+        text-indent: 10px;
+    }
+
+    .container table tr:last-child td input[type=button] {
+        width: 120px;
+        height: 30px;
+        margin-top: 25px;
+        margin-left: 50px;
+        border-radius: 10px;
+        border: none;
+        background-color: #2daf2d;
+        color: white;
+        font-weight: bolder;
+    }
+
+</style>
+<body>
+<div class="container">
+    <h1 style="background-color: yellow;text-align: center;padding: 10px">游戏查询</h1>
+    <table>
+        <tr>
+            <th>游戏名称:</th>
+            <td><input type="text" name="gameName"></td>
+        </tr>
+        <tr>
+            <th>游戏类别:</th>
+            <td><input type="text" name="gameType"></td>
+        </tr>
+        <tr>
+            <th>发行公司:</th>
+            <td><input type="text" name="gameCompany"></td>
+        </tr>
+        <tr>
+            <th>发行年份:</th>
+            <td><input type="text" name="gameYear">&nbsp;&nbsp;四位数字</td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <input type="button" value="查询">
+                <input type="button" value="新增">
+            </td>
+        </tr>
+    </table>
+</div>
+<script src="./js/jquery-1.8.3.min.js"></script>
+<script>
+    $("input[value='新增']").click(function () {
+        $("h1").html("新增游戏")
+        $("input[value='新增']").val("返回");
+        $("input[value='查询']").val("添加");
+        $("input[value='返回']").click(function () {
+            location.href = "index.html"
+        })
+    })
+
+    $("input[value='查询']").click(function () {
+        let gameName = $("input[name=gameName]").val();
+        let gameType = $("input[name=gameType]").val();
+        let gameCompany = $("input[name=gameCompany]").val();
+        let gameYear = $("input[name=gameYear]").val();
+        if (gameName == "" && gameType == "" && gameCompany == "" && gameYear == ""){
+            alert("输入框不能全为空(至少完善一项)!");
+        }
+        $.getJSON("/games/findAll",{"gameName":gameName,"gameType":gameType,"gameCompany":gameCompany,"gameYear":gameYear},function (data){
+            location.href="/games/query";
+        })
+    })
+
+</script>
+</body>
+</html>
